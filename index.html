@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a class="logo" href="#">
+            <img src="icons/quizapp-icon.svg" alt="logo">
+            <strong>QuizApp</strong>
+        </a>
+    </header>
+
+    <main>
+        <!--      start   -->
+        <section id="start" class="">
+            <div class="start-hero">
+                <span>Ready for a quick win?</span>
+                <h2>Test What you know.</h2>
+                <p>Pick a topic and make it yours.</p>
+            </div>
+          
+            <div class="start_container">
+                <label for="category">Choose your category</label>
+                <select name="category" id="category">
+                    <option value="General Knowledge">General Knowledge</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Geography">Geography</option>
+                    <option value="History">History</option>
+                </select>
+
+                <div>
+                    <label for="difficulty">Choose difficulty</label>
+                    <select name="difficulty" id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="status" class="status hidden"></div>
+
+            <button id="btn-start" class="btn btn-start">Start Quiz</button>
+           
+            <p id = "best_score" class="best_score"></p>
+
+            <div class="about_quiz">
+                <div class="questions_total">
+                    <div class="circle"></div>
+                    <p>10 questions</p>
+                </div>
+
+                <div class="duration">
+                    <div class="circle"></div>
+                    <p>About 5 minutes</p>
+                </div>
+            </div>
+            <p class="encouragement" >One question at a time. No pressure.</p>
+        </section>
+
+        <section id="quiz" class="hidden">
+            <div class="quiz_header">
+                <p id="quiz_category" class="quiz_category">General Knowledge</p>
+                <p class="timer">⌛ <time id="timerTag" datetime=""></time></p>
+            </div>
+
+            <div class="question_progress_container">
+                <div class="question_status">
+                    <p id="quiz_status">Question <span class="answered">5</span> OF 10</p>
+                    <p id="percentage_complete" class="percentage_complete">50% complete</p>
+                </div>
+                <div class="progress_track">
+                    <div id="progress" class="progress"></div>
+                </div>
+            </div>
+
+            <div class="question_answer_container">
+                <p id="question" class="question">Which planet is known as the Red Planet?</p>
+                <div class="anwser_container">
+                    <p class="anwser_instruction">Choose one anwser below.</p>
+                    <div id="answer_container" class="answer_container">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <button id="next" class="btn next" >Next question</button>
+        </section>
+
+        <section id="result" class="hidden">
+            <div class="result_badge">
+                <svg class="progress-ring" viewBox="0 0 120 120">
+                    <!-- Light lavender background track -->
+                    <circle class="ring-track" cx="60" cy="60" r="46" />
+                    <!-- Purple progress arc (approx. 75% filled) -->
+                    <circle id = "ring-fill" class="ring-fill" cx="60" cy="60" r="46" />
+                </svg>
+
+                <img class="trophy_badge" src="icons/trophy.svg" alt="trophy">
+            </div>
+
+            <div id="remark" class="remark">
+              
+            </div>
+
+            <div class="score_container">
+                <p id="score" class="score"></p>
+                <div id = "score_percent" class="score_percent"></div>
+            </div>
+
+            <div class="score_stats">
+                <div class="stat_card correct_score_card">
+                    <div class="marked">✔️</div>
+                    <div>
+                        <p>Correct</p>
+                        <strong id = "correct_score"></strong>
+                    </div>
+                </div>
+                <div class="stat_card wrong_score_card">
+                    <div class="marked">➖</div>
+                    <div>
+                        <p>To Review</p>
+                        <strong id = "wrong_score"></strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result_button">
+                <button id="play_again" class="btn">Play again</button>
+                <button id="back_to_start" class="btn back_to_start">Back to start</button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
