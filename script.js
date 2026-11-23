@@ -6,6 +6,7 @@ const startBtn = document.getElementById("btn-start");
 const statusTag =  document.getElementById("status");
 const category = document.getElementById("category");
 const difficulty = document.getElementById("difficulty");
+const type = document.getElementById("type");
 const nextQuestionBtn = document.getElementById("next");
 const optionsContainer = document.getElementById("answer_container");
 const backToStartBtn = document.getElementById("back_to_start");
@@ -88,12 +89,12 @@ async function fetchQuestions(url) {
 
 }
 
-function generateURL(category, difficulty) {
+function generateURL(category, difficulty, type) {
     let category_number = category == "General Knowledge" ? "9" 
                                         : category == "Mathematics" ? "19" : 
                                         category == "Sports" ? "21" :
                                         category == "Geography" ? "22" : "23";
-    const url = `https://opentdb.com/api.php?amount=10&category=${category_number}&difficulty=${difficulty}&type=multiple&encode=url3986`;
+    const url = `https://opentdb.com/api.php?amount=10&category=${category_number}&difficulty=${difficulty}&type=${type}&encode=url3986`;
     
     return url;
 }
@@ -177,6 +178,27 @@ function validateAnswer(userAnswer) {
   nextQuestionBtn.disable = false;
 };
 
+function updateBestScore() {
+    let bestScore;
+    let totalQuestions = quiz.questions.length;
+  
+  if(localStorage.getItem("bestScore")) {
+
+    bestScore = JSON.parse(localStorage.getItem("bestScore"));
+
+    if (bestScore.score < score) {
+
+      bestScore.score = score;
+
+    }
+
+  } else bestScore = { score: quiz.score, total: totalQuestions }
+
+  localStorage.setItem("bestScore", JSON.stringify(bestScore));
+
+  document.getElementById("best_score").textContent = `Your best Score is: ${(bestScore.score / bestScore.total) * 100}%`;
+}
+
 function displayResult() {
   
   resultSection.classList.remove("hidden");
@@ -201,26 +223,14 @@ function displayResult() {
 
   document.getElementById("remark").innerHTML = remarkHtml;
 
-  let bestScore;
-  
-  if(localStorage.getItem("bestScore")) {
-
-    bestScore = JSON.parse(localStorage.getItem("bestScore"));
-
-    if (bestScore.score < score) {
-
-      bestScore.score = score;
-
-    }
-
-  } else bestScore = { score, total: totalQuestions }
-
-  localStorage.setItem("bestScore", JSON.stringify(bestScore));
+  updateBestScore();
 
 }
 
-let bestScore = JSON.parse(localStorage.getItem("bestScore")) || false;
 
+let bestScore = JSON.parse(localStorage.getItem("bestScore"));
+
+console.log(bestScore)
 
 bestScore ? document.getElementById("best_score").textContent = `Your best Score is: ${(bestScore.score / bestScore.total) * 100}%` : "";
 
@@ -235,7 +245,7 @@ startBtn.addEventListener("click", async () => {
         startBtn.style.cursor = "not-allowed"
         startBtn.textContent = "Fetching";
 
-        const url = generateURL(category.value, difficulty.value)
+        const url = generateURL(category.value, difficulty.value, type.value)
         
         const data = await fetchQuestions(url);
         
@@ -256,6 +266,8 @@ startBtn.addEventListener("click", async () => {
         quizSection.classList.remove("hidden");
 
         startBtn.textContent = "Start Quiz";
+        startBtn.disable = false;
+        startBtn.style.cursor = "pointer";
         setStatus("", "hidden")
 
         quiz = new Quiz(questions, 0, 0);
@@ -315,9 +327,10 @@ backToStartBtn.addEventListener("click", () => {
 
   resultSection.classList.add("hidden");
 
-  document.getElementById("best_score").textContent = `Your best Score is: ${(bestScore.score / bestScore.total) * 100}%`;
+  updateBestScore();
   
 });
+
 
 
 
